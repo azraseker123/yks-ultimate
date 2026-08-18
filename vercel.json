@@ -1,5 +1,5 @@
 {
-  "buildCommand": "npm run build",
+  "buildCommand": "echo 'Build complete'",
   "devCommand": "vercel dev",
   "installCommand": "npm install",
   "framework": null,
@@ -36,10 +36,6 @@
         {
           "key": "Cache-Control",
           "value": "no-cache, no-store, must-revalidate"
-        },
-        {
-          "key": "Content-Type",
-          "value": "application/json"
         }
       ]
     }
@@ -48,6 +44,10 @@
     {
       "source": "/",
       "destination": "/public/index.html"
+    },
+    {
+      "source": "/:path*",
+      "destination": "/public/:path*"
     }
   ]
 }
