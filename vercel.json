@@ -3,13 +3,6 @@
   "devCommand": "vercel dev",
   "installCommand": "npm install",
   "framework": null,
-  "functions": {
-    "api/**/*.js": {
-      "runtime": "node18",
-      "memory": 1024,
-      "maxDuration": 60
-    }
-  },
   "git": {
     "deploymentEnabled": {
       "main": true
