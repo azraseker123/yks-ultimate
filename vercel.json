@@ -2,7 +2,10 @@
   "framework": null,
   "outputDirectory": ".",
   "rewrites": [
-    { "source": "/api/(.*)", "destination": "/api_$1.js" },
+    { "source": "/api/auth", "destination": "/api_auth.js" },
+    { "source": "/api/user", "destination": "/api_user.js" },
+    { "source": "/api/tracking", "destination": "/api_tracking.js" },
+    { "source": "/api/ai", "destination": "/api_ai.js" },
     { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
