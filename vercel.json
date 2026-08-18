@@ -1,0 +1,43 @@
+{
+  "buildCommand": "echo 'Build complete'",
+  "devCommand": "vercel dev",
+  "installCommand": "npm install",
+  "framework": null,
+  "functions": {
+    "api/**/*.js": {
+      "runtime": "nodejs18.x",
+      "memory": 1024,
+      "maxDuration": 60
+    }
+  },
+  "env": [
+    {
+      "key": "POSTGRES_URL",
+      "description": "PostgreSQL Database URL"
+    },
+    {
+      "key": "JWT_SECRET",
+      "description": "JWT Secret for authentication"
+    },
+    {
+      "key": "GEMINI_API_KEY",
+      "description": "Google Gemini API Key"
+    }
+  ],
+  "git": {
+    "deploymentEnabled": {
+      "main": true
+    }
+  },
+  "headers": [
+    {
+      "source": "/api/:path*",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-cache, no-store, must-revalidate"
+        }
+      ]
+    }
+  ]
+}

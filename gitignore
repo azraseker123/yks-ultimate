@@ -1,0 +1,95 @@
+# Environment variables
+.env
+.env.local
+.env.*.local
+.env.production
+
+# Node modules
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+*.sublime-project
+*.sublime-workspace
+
+# Vercel
+.vercel/
+.vercel
+
+# Build artifacts
+dist/
+build/
+out/
+
+# Logs
+logs/
+*.log
+
+# Database
+*.sql.backup
+pg_dump.sql
+
+# OS files
+.DS_Store
+desktop.ini
+
+# License exports
+licenses.csv
+licenses_backup.csv
+
+# Testing
+coverage/
+.nyc_output/
+test-results/
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# Backup files
+*.bak
+*.backup
+*~
+
+# Cache files
+.cache/
+cache/
+
+# Development only
+localhost/
+.local/
+
+# Sensitive files
+private/
+secrets/
+config/
+credentials.json
+
+# Distribution
+dist/
+*.tgz
+
+# Package lock files (optional)
+# Uncomment if you want to commit them
+# package-lock.json
+# yarn.lock
+
+# Modules
+.modules/
+vendor/
+
+# Other
+.env.test
+.venv
+env/
+venv/

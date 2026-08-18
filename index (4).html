@@ -1,0 +1,3267 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sınav Hazırlık Koçu - Başarıya Giden Yolun Rehberi</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #0f1f3f;
+            --secondary: #1a3a52;
+            --accent: #00d4ff;
+            --accent-alt: #ff6b9d;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --text-light: #e5e7eb;
+            --text-muted: #9ca3af;
+            --border: #2d3e4f;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--primary) 0%, #0a1420 100%);
+            color: var(--text-light);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* ===== AUTHENTICATION PAGES ===== */
+        .auth-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .auth-card {
+            background: rgba(26, 58, 82, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 40px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+        }
+
+        .auth-card h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-alt) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .auth-card .subtitle {
+            color: var(--text-muted);
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-light);
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 12px 16px;
+            background: rgba(15, 31, 63, 0.6);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text-light);
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: var(--accent);
+            background: rgba(0, 212, 255, 0.05);
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-primary {
+            width: 100%;
+            background: linear-gradient(135deg, var(--accent) 0%, #0099cc 100%);
+            color: var(--primary);
+            border: none;
+            margin-top: 20px;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 212, 255, 0.3);
+        }
+
+        .auth-toggle {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        .auth-toggle a {
+            color: var(--accent);
+            cursor: pointer;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .error-message {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.5);
+            color: #fca5a5;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 13px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        /* ===== MAIN APP LAYOUT ===== */
+        .app-container {
+            display: none;
+        }
+
+        .app-container.active {
+            display: flex;
+        }
+
+        .sidebar {
+            width: 280px;
+            background: rgba(15, 31, 63, 0.9);
+            border-right: 1px solid var(--border);
+            padding: 30px 0;
+            height: 100vh;
+            overflow-y: auto;
+            position: fixed;
+            left: 0;
+            top: 0;
+        }
+
+        .sidebar-logo {
+            padding: 0 20px 30px;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 30px;
+        }
+
+        .sidebar-logo h1 {
+            font-size: 18px;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-alt) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 5px;
+        }
+
+        .sidebar-logo p {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .sidebar-menu {
+            list-style: none;
+        }
+
+        .sidebar-menu li {
+            margin: 0;
+        }
+
+        .sidebar-menu a {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
+            cursor: pointer;
+        }
+
+        .sidebar-menu a:hover {
+            background: rgba(0, 212, 255, 0.1);
+            color: var(--accent);
+            border-left-color: var(--accent);
+        }
+
+        .sidebar-menu a.active {
+            background: rgba(0, 212, 255, 0.15);
+            color: var(--accent);
+            border-left-color: var(--accent);
+            font-weight: 600;
+        }
+
+        .sidebar-menu a i {
+            width: 20px;
+            height: 20px;
+            margin-right: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .pro-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #ff6b9d 0%, #ff8fa3 100%);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-left: auto;
+        }
+
+        .sidebar-footer {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            padding: 20px;
+            border-top: 1px solid var(--border);
+            background: rgba(15, 31, 63, 0.9);
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-alt) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            margin-right: 12px;
+            font-size: 16px;
+        }
+
+        .user-details h3 {
+            font-size: 13px;
+            margin-bottom: 2px;
+        }
+
+        .user-details p {
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        .btn-logout {
+            width: 100%;
+            padding: 10px;
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: #fca5a5;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+        }
+
+        .btn-logout:hover {
+            background: rgba(239, 68, 68, 0.2);
+        }
+
+        .main-content {
+            margin-left: 280px;
+            padding: 40px;
+            flex: 1;
+            min-height: 100vh;
+        }
+
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ===== HOME PAGE ===== */
+        .welcome-header {
+            margin-bottom: 40px;
+        }
+
+        .welcome-text h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-alt) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .welcome-text p {
+            color: var(--text-muted);
+            font-size: 15px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background: rgba(26, 58, 82, 0.6);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 24px;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            background: rgba(26, 58, 82, 0.8);
+            border-color: var(--accent);
+            transform: translateY(-5px);
+        }
+
+        .stat-card h3 {
+            color: var(--text-muted);
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        .stat-card .value {
+            font-size: 40px;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-alt) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .stat-card .subtext {
+            color: var(--text-muted);
+            font-size: 12px;
+            margin-top: 8px;
+        }
+
+        .primary-card {
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1) 0%, rgba(255, 107, 157, 0.1) 100%);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 32px;
+            margin-bottom: 40px;
+        }
+
+        .primary-card h2 {
+            font-size: 18px;
+            margin-bottom: 8px;
+            color: var(--text-light);
+        }
+
+        .primary-card p {
+            color: var(--text-muted);
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .goal-display {
+            font-size: 28px;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-alt) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            word-break: break-word;
+        }
+
+        /* ===== CURRICULUM PAGE ===== */
+        .curriculum-container {
+            background: rgba(26, 58, 82, 0.6);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 30px;
+        }
+
+        .curriculum-header {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .curriculum-tabs {
+            display: flex;
+            gap: 10px;
+        }
+
+        .tab-btn {
+            padding: 10px 20px;
+            background: rgba(15, 31, 63, 0.6);
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .tab-btn.active {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: var(--primary);
+        }
+
+        .tab-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .subject-group {
+            margin-bottom: 30px;
+        }
+
+        .subject-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .topic-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 12px;
+        }
+
+        .topic-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 16px;
+            background: rgba(15, 31, 63, 0.6);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .topic-item:hover {
+            background: rgba(0, 212, 255, 0.1);
+            border-color: var(--accent);
+        }
+
+        .topic-item input[type="checkbox"] {
+            margin-right: 10px;
+            cursor: pointer;
+        }
+
+        .topic-item label {
+            cursor: pointer;
+            flex: 1;
+            font-size: 13px;
+        }
+
+        .topic-item input[type="checkbox"]:checked + label {
+            color: var(--success);
+            text-decoration: line-through;
+        }
+
+        /* ===== EXAM TRACKING PAGE ===== */
+        .exam-section {
+            background: rgba(26, 58, 82, 0.6);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        .exam-form {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .exam-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+            margin-top: 20px;
+        }
+
+        .exam-table thead {
+            background: rgba(15, 31, 63, 0.8);
+            border-bottom: 2px solid var(--border);
+        }
+
+        .exam-table th {
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-size: 11px;
+        }
+
+        .exam-table td {
+            padding: 12px;
+            border-bottom: 1px solid var(--border);
+            color: var(--text-light);
+        }
+
+        .exam-table tbody tr:hover {
+            background: rgba(0, 212, 255, 0.05);
+        }
+
+        .btn-delete {
+            padding: 6px 12px;
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: #fca5a5;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 11px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-delete:hover {
+            background: rgba(239, 68, 68, 0.2);
+        }
+
+        .chart-container {
+            background: rgba(15, 31, 63, 0.6);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            min-height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        canvas {
+            width: 100% !important;
+            height: auto !important;
+        }
+
+        /* ===== QUESTION TRACKING PAGE ===== */
+        .question-form {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .stats-breakdown {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .breakdown-card {
+            background: rgba(15, 31, 63, 0.6);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .breakdown-card h4 {
+            color: var(--text-muted);
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .breakdown-card .number {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .breakdown-card .percentage {
+            color: var(--text-muted);
+            font-size: 12px;
+        }
+
+        /* ===== POMODORO PAGE ===== */
+        .pomodoro-center {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 500px;
+            text-align: center;
+        }
+
+        .timer-display {
+            font-size: 96px;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-alt) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-variant-numeric: tabular-nums;
+            margin-bottom: 30px;
+        }
+
+        .timer-status {
+            color: var(--text-muted);
+            font-size: 14px;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .timer-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .btn-secondary {
+            padding: 12px 24px;
+            background: rgba(26, 58, 82, 0.8);
+            border: 1px solid var(--border);
+            color: var(--text-light);
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        /* ===== SLEEP TRACKING PAGE ===== */
+        .sleep-form {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        /* ===== BADGES & LEADERBOARD PAGE ===== */
+        .badges-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .badge {
+            background: rgba(26, 58, 82, 0.6);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            aspect-ratio: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .badge:hover {
+            border-color: var(--accent);
+            background: rgba(0, 212, 255, 0.1);
+        }
+
+        .badge.unlocked {
+            border-color: var(--success);
+            background: rgba(16, 185, 129, 0.1);
+        }
+
+        .badge-icon {
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+
+        .badge-name {
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: var(--text-light);
+        }
+
+        .badge-progress {
+            font-size: 10px;
+            color: var(--text-muted);
+        }
+
+        .leaderboard-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .leaderboard-table thead {
+            background: rgba(15, 31, 63, 0.8);
+            border-bottom: 2px solid var(--border);
+        }
+
+        .leaderboard-table th {
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-size: 12px;
+        }
+
+        .leaderboard-table td {
+            padding: 15px;
+            border-bottom: 1px solid var(--border);
+            color: var(--text-light);
+        }
+
+        .rank-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: rgba(0, 212, 255, 0.2);
+            color: var(--accent);
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        .rank-badge.gold {
+            background: rgba(245, 158, 11, 0.2);
+            color: var(--warning);
+        }
+
+        .rank-badge.silver {
+            background: rgba(209, 213, 219, 0.1);
+            color: #d1d5db;
+        }
+
+        .rank-badge.bronze {
+            background: rgba(217, 119, 6, 0.2);
+            color: #d97706;
+        }
+
+        /* ===== AI FEATURES PAGE ===== */
+        .ai-lock {
+            background: rgba(26, 58, 82, 0.6);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 60px 30px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .ai-lock h2 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: var(--text-light);
+        }
+
+        .ai-lock p {
+            color: var(--text-muted);
+            margin-bottom: 20px;
+        }
+
+        .btn-upgrade {
+            padding: 12px 30px;
+            background: linear-gradient(135deg, var(--accent-alt) 0%, var(--accent) 100%);
+            border: none;
+            color: white;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .btn-upgrade:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(255, 107, 157, 0.3);
+        }
+
+        .ai-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .ai-tab-btn {
+            padding: 10px 20px;
+            background: rgba(15, 31, 63, 0.6);
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .ai-tab-btn.active {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: var(--primary);
+        }
+
+        .ai-content {
+            background: rgba(26, 58, 82, 0.6);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 30px;
+            display: none;
+        }
+
+        .ai-content.active {
+            display: block;
+        }
+
+        .ai-form {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .chat-container {
+            background: rgba(15, 31, 63, 0.6);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            height: 500px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .chat-message {
+            display: flex;
+            gap: 12px;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .chat-message.user {
+            justify-content: flex-end;
+        }
+
+        .message-content {
+            max-width: 70%;
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .chat-message.assistant .message-content {
+            background: rgba(0, 212, 255, 0.1);
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            color: var(--text-light);
+        }
+
+        .chat-message.user .message-content {
+            background: var(--accent);
+            color: var(--primary);
+        }
+
+        .chat-input-group {
+            display: flex;
+            gap: 10px;
+            padding: 20px;
+            border-top: 1px solid var(--border);
+        }
+
+        .chat-input-group input {
+            flex: 1;
+            padding: 10px 15px;
+            background: rgba(15, 31, 63, 0.6);
+            border: 1px solid var(--border);
+            color: var(--text-light);
+            border-radius: 6px;
+            font-size: 13px;
+        }
+
+        .chat-input-group button {
+            padding: 10px 20px;
+            background: var(--accent);
+            border: none;
+            color: var(--primary);
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .chat-input-group button:hover {
+            transform: translateY(-2px);
+        }
+
+        .flashcard-container {
+            perspective: 1000px;
+            margin-bottom: 30px;
+        }
+
+        .flashcard {
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1) 0%, rgba(255, 107, 157, 0.1) 100%);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            padding: 40px;
+            min-height: 300px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.6s ease;
+            transform-style: preserve-3d;
+        }
+
+        .flashcard.flipped {
+            background: linear-gradient(135deg, rgba(255, 107, 157, 0.1) 0%, rgba(0, 212, 255, 0.1) 100%);
+        }
+
+        .flashcard-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .flashcard-text {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        .flashcard-nav {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        .test-question {
+            background: rgba(26, 58, 82, 0.6);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 25px;
+        }
+
+        .test-question h3 {
+            font-size: 15px;
+            margin-bottom: 15px;
+            color: var(--text-light);
+        }
+
+        .test-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .test-option {
+            display: flex;
+            align-items: center;
+            padding: 12px 16px;
+            background: rgba(15, 31, 63, 0.6);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .test-option:hover {
+            border-color: var(--accent);
+            background: rgba(0, 212, 255, 0.05);
+        }
+
+        .test-option input[type="radio"] {
+            margin-right: 12px;
+            cursor: pointer;
+        }
+
+        .test-option label {
+            cursor: pointer;
+            flex: 1;
+            font-size: 13px;
+        }
+
+        .upload-area {
+            background: rgba(15, 31, 63, 0.6);
+            border: 2px dashed var(--border);
+            border-radius: 12px;
+            padding: 40px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 25px;
+        }
+
+        .upload-area:hover {
+            border-color: var(--accent);
+            background: rgba(0, 212, 255, 0.05);
+        }
+
+        .upload-area p {
+            color: var(--text-muted);
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .solution-display {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            line-height: 1.8;
+            font-size: 14px;
+        }
+
+        /* ===== PROFILE & SETTINGS PAGE ===== */
+        .settings-card {
+            background: rgba(26, 58, 82, 0.6);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 25px;
+        }
+
+        .settings-card h3 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--text-light);
+        }
+
+        .settings-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .pro-status {
+            padding: 20px;
+            background: linear-gradient(135deg, rgba(255, 107, 157, 0.1) 0%, rgba(255, 140, 163, 0.1) 100%);
+            border: 2px solid rgba(255, 107, 157, 0.3);
+            border-radius: 12px;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .pro-status.active {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(34, 197, 94, 0.1) 100%);
+            border-color: rgba(16, 185, 129, 0.3);
+        }
+
+        .pro-status h3 {
+            color: var(--text-light);
+            margin-bottom: 10px;
+        }
+
+        .pro-status p {
+            color: var(--text-muted);
+            font-size: 13px;
+        }
+
+        .success-message {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.5);
+            color: #86efac;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 13px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .success-message.show {
+            display: block;
+        }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid var(--border);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: rgba(26, 58, 82, 0.95);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 30px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-content h2 {
+            margin-bottom: 20px;
+            color: var(--text-light);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 24px;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .modal-close:hover {
+            color: var(--accent);
+        }
+
+        @media (max-width: 1024px) {
+            .sidebar {
+                width: 200px;
+                padding: 20px 0;
+            }
+
+            .main-content {
+                margin-left: 200px;
+                padding: 20px;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                position: fixed;
+                left: -200px;
+                width: 200px;
+                height: 100vh;
+                z-index: 500;
+                transition: left 0.3s ease;
+            }
+
+            .sidebar.open {
+                left: 0;
+            }
+
+            .main-content {
+                margin-left: 0;
+                padding: 15px;
+            }
+
+            .timer-display {
+                font-size: 64px;
+            }
+
+            .auth-card {
+                padding: 25px;
+            }
+
+            .badges-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .message-content {
+                max-width: 85%;
+            }
+
+            .exam-form, .ai-form, .sleep-form {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* ===== SCROLLBAR ===== */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(15, 31, 63, 0.6);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent);
+        }
+    </style>
+</head>
+<body>
+    <!-- AUTH PAGE -->
+    <div id="authPage" class="auth-container">
+        <div class="auth-card">
+            <h1 id="authTitle">Giriş Yap</h1>
+            <p class="subtitle">Başarıya giden yolda seninle birlikte</p>
+            <div class="error-message" id="authError"></div>
+            
+            <!-- LOGIN FORM -->
+            <div id="loginForm">
+                <div class="form-group">
+                    <label>E-posta</label>
+                    <input type="email" id="loginEmail" placeholder="ornek@email.com" required>
+                </div>
+                <div class="form-group">
+                    <label>Şifre</label>
+                    <input type="password" id="loginPassword" placeholder="••••••••" required>
+                </div>
+                <button class="btn btn-primary" onclick="handleLogin()">Giriş Yap</button>
+            </div>
+
+            <!-- REGISTER FORM -->
+            <div id="registerForm" style="display: none;">
+                <div class="form-group">
+                    <label>Ad Soyad</label>
+                    <input type="text" id="registerName" placeholder="Adı Soyadı" required>
+                </div>
+                <div class="form-group">
+                    <label>E-posta</label>
+                    <input type="email" id="registerEmail" placeholder="ornek@email.com" required>
+                </div>
+                <div class="form-group">
+                    <label>Şifre</label>
+                    <input type="password" id="registerPassword" placeholder="••••••••" required>
+                </div>
+                <div class="form-group">
+                    <label>Şifre Tekrar</label>
+                    <input type="password" id="registerPasswordConfirm" placeholder="••••••••" required>
+                </div>
+                <div class="form-group">
+                    <label>Hedefin</label>
+                    <select id="registerGoal" required>
+                        <option value="">Hedefini Seç</option>
+                        <option value="tyt">TYT</option>
+                        <option value="ayt">AYT</option>
+                        <option value="both">İkisi de</option>
+                    </select>
+                </div>
+                <button class="btn btn-primary" onclick="handleRegister()">Kaydol</button>
+            </div>
+
+            <div class="auth-toggle">
+                <span id="toggleText">Hesabın yok mu? <a onclick="toggleAuthForm()">Kaydol</a></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN APP -->
+    <div id="appContainer" class="app-container">
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <div class="sidebar-logo">
+                <h1>📚 Başarı Koçu</h1>
+                <p>Sınavda Başarının Yolu</p>
+            </div>
+
+            <ul class="sidebar-menu">
+                <li><a class="menu-link active" data-page="home" onclick="changePage('home')">
+                    <i>🏠</i> Ana Sayfa
+                </a></li>
+                <li><a class="menu-link" data-page="curriculum" onclick="changePage('curriculum')">
+                    <i>📖</i> Müfredat
+                </a></li>
+                <li><a class="menu-link" data-page="schedule" onclick="changePage('schedule')">
+                    <i>📅</i> Program
+                </a></li>
+                <li><a class="menu-link" data-page="exams" onclick="changePage('exams')">
+                    <i>📊</i> Deneme Takibi
+                </a></li>
+                <li><a class="menu-link" data-page="questions" onclick="changePage('questions')">
+                    <i>❓</i> Soru Takibi
+                </a></li>
+                <li><a class="menu-link" data-page="sleep" onclick="changePage('sleep')">
+                    <i>😴</i> Uyku Takibi
+                </a></li>
+                <li><a class="menu-link" data-page="pomodoro" onclick="changePage('pomodoro')">
+                    <i>⏱️</i> Pomodoro
+                </a></li>
+                <li><a class="menu-link" data-page="badges" onclick="changePage('badges')">
+                    <i>🏆</i> Rozetler & Liderlik <span class="pro-badge" id="proLedBadge" style="display: none;">PRO</span>
+                </a></li>
+                <li><a class="menu-link" data-page="ai" onclick="changePage('ai')">
+                    <i>🤖</i> AI Araçları <span class="pro-badge" id="proAIBadge" style="display: none;">PRO</span>
+                </a></li>
+                <li><a class="menu-link" data-page="settings" onclick="changePage('settings')">
+                    <i>⚙️</i> Ayarlar
+                </a></li>
+            </ul>
+
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <div class="user-avatar" id="userAvatar">U</div>
+                    <div class="user-details">
+                        <h3 id="userName">Kullanıcı</h3>
+                        <p id="userGoal">Hedef: TYT</p>
+                    </div>
+                </div>
+                <button class="btn-logout" onclick="handleLogout()">Çıkış Yap</button>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="main-content">
+            <!-- HOME PAGE -->
+            <div id="homePage" class="page active">
+                <div class="welcome-header">
+                    <div class="welcome-text">
+                        <h1>Başarıya Hoş Geldin! 🎯</h1>
+                        <p id="welcomeSubtitle">Bugün de bir adım daha yaklaş hedefine</p>
+                    </div>
+                </div>
+
+                <div class="primary-card">
+                    <h2>📌 Ana Hedefiniz</h2>
+                    <p>Çalışmalarınızda odaklanmanızı sağlayan ana hedefimiz:</p>
+                    <div class="goal-display" id="mainGoalDisplay">Hedefinizi belirleyin</div>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h3>Günlük Seri</h3>
+                        <div class="value" id="streakValue">0</div>
+                        <p class="subtext">Gün üst üste çalışma</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Toplam Sorular</h3>
+                        <div class="value" id="totalQuestionsValue">0</div>
+                        <p class="subtext">Şimdiye kadar çözülen</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Son Deneme Neti</h3>
+                        <div class="value" id="lastExamScoreValue">-</div>
+                        <p class="subtext">Son sınav sonucunuz</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Başarı Oranı</h3>
+                        <div class="value" id="successRateValue">0%</div>
+                        <p class="subtext">Doğru / Toplam sorular</p>
+                    </div>
+                </div>
+
+                <div class="primary-card">
+                    <h2>💡 AI Çalışma Önerisi</h2>
+                    <p id="aiSuggestion" style="color: var(--text-light); font-size: 16px; font-weight: 500;">Yükleniyor...</p>
+                </div>
+
+                <div class="primary-card">
+                    <h2>🌟 Motivasyon Köşesi</h2>
+                    <p id="motivationText" style="color: var(--text-light); font-size: 16px; line-height: 1.8; font-weight: 500;">Yükleniyor...</p>
+                </div>
+            </div>
+
+            <!-- CURRICULUM PAGE -->
+            <div id="curriculumPage" class="page">
+                <h2 style="margin-bottom: 30px; font-size: 24px;">📖 Müfredat Takibi</h2>
+                
+                <div class="curriculum-container">
+                    <div class="curriculum-header">
+                        <div class="curriculum-tabs">
+                            <button class="tab-btn active" onclick="switchCurriculum('tyt')">TYT</button>
+                            <button class="tab-btn" onclick="switchCurriculum('ayt')">AYT</button>
+                        </div>
+                    </div>
+
+                    <div id="curriculumContent"></div>
+                </div>
+            </div>
+
+            <!-- SCHEDULE PAGE -->
+            <div id="schedulePage" class="page">
+                <h2 style="margin-bottom: 30px; font-size: 24px;">📅 Haftalık Çalışma Programı</h2>
+                
+                <div class="exam-section">
+                    <div class="exam-form">
+                        <div class="form-group">
+                            <label>Gün Seç</label>
+                            <select id="scheduleDay" required>
+                                <option value="">Gün Seçiniz</option>
+                                <option value="monday">Pazartesi</option>
+                                <option value="tuesday">Salı</option>
+                                <option value="wednesday">Çarşamba</option>
+                                <option value="thursday">Perşembe</option>
+                                <option value="friday">Cuma</option>
+                                <option value="saturday">Cumartesi</option>
+                                <option value="sunday">Pazar</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Ders</label>
+                            <input type="text" id="scheduleSubject" placeholder="Örn: Matematik" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Konular</label>
+                            <input type="text" id="scheduleTopics" placeholder="Örn: Fonksiyonlar, Türev" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Süre (dakika)</label>
+                            <input type="number" id="scheduleDuration" placeholder="60" required>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" onclick="addScheduleItem()">Ekle</button>
+
+                    <table class="exam-table" id="scheduleTable" style="display: none; margin-top: 20px;">
+                        <thead>
+                            <tr>
+                                <th>Gün</th>
+                                <th>Ders</th>
+                                <th>Konular</th>
+                                <th>Süre</th>
+                                <th>İşlem</th>
+                            </tr>
+                        </thead>
+                        <tbody id="scheduleTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- EXAMS PAGE -->
+            <div id="examsPage" class="page">
+                <h2 style="margin-bottom: 30px; font-size: 24px;">📊 Deneme Takibi</h2>
+
+                <div class="exam-section">
+                    <h3 style="margin-bottom: 20px; color: var(--text-light);">Deneme Sonucu Ekle</h3>
+                    <div class="exam-form">
+                        <div class="form-group">
+                            <label>Sınav Türü</label>
+                            <select id="examType" required>
+                                <option value="">Seçiniz</option>
+                                <option value="tyt">TYT</option>
+                                <option value="ayt">AYT</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Deneme Adı</label>
+                            <input type="text" id="examName" placeholder="Örn: Mart Denemesi #1" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Net</label>
+                            <input type="number" id="examScore" placeholder="50" step="0.5" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Tarih</label>
+                            <input type="date" id="examDate" required>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" onclick="addExam()">Ekle</button>
+                </div>
+
+                <div class="chart-container">
+                    <canvas id="examChart"></canvas>
+                </div>
+
+                <div class="exam-section">
+                    <h3 style="margin-bottom: 20px; color: var(--text-light);">Deneme Tarihi</h3>
+                    <table class="exam-table">
+                        <thead>
+                            <tr>
+                                <th>Sınav Türü</th>
+                                <th>Adı</th>
+                                <th>Net</th>
+                                <th>Tarih</th>
+                                <th>İşlem</th>
+                            </tr>
+                        </thead>
+                        <tbody id="examTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- QUESTIONS PAGE -->
+            <div id="questionsPage" class="page">
+                <h2 style="margin-bottom: 30px; font-size: 24px;">❓ Soru Takibi & Yanlış Analizi</h2>
+
+                <div class="exam-section">
+                    <h3 style="margin-bottom: 20px; color: var(--text-light);">Soru İstatistikleri Ekle</h3>
+                    <div class="question-form">
+                        <div class="form-group">
+                            <label>Ders</label>
+                            <select id="questionSubject" required>
+                                <option value="">Seçiniz</option>
+                                <option value="turkish">Türkçe</option>
+                                <option value="math">Matematik</option>
+                                <option value="geometry">Geometri</option>
+                                <option value="physics">Fizik</option>
+                                <option value="chemistry">Kimya</option>
+                                <option value="biology">Biyoloji</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Konu</label>
+                            <input type="text" id="questionTopic" placeholder="Örn: Türev" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Doğru Sayı</label>
+                            <input type="number" id="correctCount" placeholder="5" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Yanlış Sayı</label>
+                            <input type="number" id="wrongCount" placeholder="2" required>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" onclick="addQuestionStat()">Ekle</button>
+                </div>
+
+                <div class="exam-section" id="questionStatsSection" style="display: none;">
+                    <h3 style="margin-bottom: 20px; color: var(--text-light);">Genel İstatistikler</h3>
+                    <div class="stats-breakdown" id="questionStatsContainer"></div>
+                </div>
+
+                <div class="exam-section">
+                    <h3 style="margin-bottom: 20px; color: var(--text-light);">Konu Başında Sorular</h3>
+                    <table class="exam-table">
+                        <thead>
+                            <tr>
+                                <th>Ders</th>
+                                <th>Konu</th>
+                                <th>Doğru</th>
+                                <th>Yanlış</th>
+                                <th>Toplam</th>
+                                <th>Başarı %</th>
+                                <th>İşlem</th>
+                            </tr>
+                        </thead>
+                        <tbody id="questionTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- SLEEP PAGE -->
+            <div id="sleepPage" class="page">
+                <h2 style="margin-bottom: 30px; font-size: 24px;">😴 Uyku Takibi</h2>
+
+                <div class="exam-section">
+                    <h3 style="margin-bottom: 20px; color: var(--text-light);">Uyku Saati Ekle</h3>
+                    <div class="sleep-form">
+                        <div class="form-group">
+                            <label>Tarih</label>
+                            <input type="date" id="sleepDate" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Uyku Saati</label>
+                            <input type="number" id="sleepHours" placeholder="7.5" step="0.5" required>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" onclick="addSleepLog()">Ekle</button>
+                </div>
+
+                <div class="chart-container">
+                    <canvas id="sleepChart"></canvas>
+                </div>
+
+                <div class="exam-section">
+                    <h3 style="margin-bottom: 20px; color: var(--text-light);">Uyku Geçmişi</h3>
+                    <table class="exam-table">
+                        <thead>
+                            <tr>
+                                <th>Tarih</th>
+                                <th>Saat</th>
+                                <th>İşlem</th>
+                            </tr>
+                        </thead>
+                        <tbody id="sleepTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- POMODORO PAGE -->
+            <div id="pomodoroPage" class="page">
+                <h2 style="margin-bottom: 30px; font-size: 24px; text-align: center;">⏱️ Pomodoro Zamanlayıcısı</h2>
+
+                <div class="pomodoro-center">
+                    <div class="timer-display" id="timerDisplay">25:00</div>
+                    <div class="timer-status" id="timerStatus">Hazır başlamak için tıkla</div>
+                    <div class="timer-buttons">
+                        <button class="btn btn-secondary" onclick="startTimer()">Başla</button>
+                        <button class="btn btn-secondary" onclick="pauseTimer()">Duraklat</button>
+                        <button class="btn btn-secondary" onclick="resetTimer()">Sıfırla</button>
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin-top: 50px; color: var(--text-muted); font-size: 13px;">
+                    <p>Pomodoro Tekniği: 25 dakika yoğun çalışma + 5 dakika mola</p>
+                    <p id="pomodoroStats" style="margin-top: 15px;">Bugün tamamlanan: 0 Pomodoro</p>
+                </div>
+            </div>
+
+            <!-- BADGES PAGE -->
+            <div id="badgesPage" class="page">
+                <h2 style="margin-bottom: 30px; font-size: 24px;">🏆 Rozetler & Liderlik Tablosu</h2>
+
+                <h3 style="margin-bottom: 20px; color: var(--text-light); font-size: 18px;">Açılan Rozetler</h3>
+                <div class="badges-container" id="badgesContainer"></div>
+
+                <h3 style="margin-bottom: 20px; color: var(--text-light); font-size: 18px;">Liderlik Tablosu</h3>
+                <div class="exam-section">
+                    <table class="leaderboard-table">
+                        <thead>
+                            <tr>
+                                <th>Sıra</th>
+                                <th>Kullanıcı</th>
+                                <th>Puan</th>
+                                <th>Seviye</th>
+                            </tr>
+                        </thead>
+                        <tbody id="leaderboardBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- AI FEATURES PAGE -->
+            <div id="aiPage" class="page">
+                <h2 style="margin-bottom: 30px; font-size: 24px;">🤖 AI Araçları</h2>
+
+                <div id="aiLockContainer"></div>
+
+                <!-- AI COACH -->
+                <div id="aiCoachSection" style="display: none;">
+                    <div class="ai-tabs">
+                        <button class="ai-tab-btn active" onclick="switchAITool('coach')">AI Koç</button>
+                        <button class="ai-tab-btn" onclick="switchAITool('flashcard')">Flashcard</button>
+                        <button class="ai-tab-btn" onclick="switchAITool('testlab')">Test Lab</button>
+                        <button class="ai-tab-btn" onclick="switchAITool('photosolver')">Fotoğraflı Soru</button>
+                    </div>
+
+                    <!-- COACH TOOL -->
+                    <div id="coachContent" class="ai-content active">
+                        <h3 style="margin-bottom: 20px; color: var(--text-light);">Kişisel Koçunuz</h3>
+                        <div class="chat-container">
+                            <div class="chat-messages" id="chatMessages"></div>
+                            <div class="chat-input-group">
+                                <input type="text" id="coachInput" placeholder="Sorunuzu sorun...">
+                                <button onclick="sendCoachMessage()">Gönder</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- FLASHCARD TOOL -->
+                    <div id="flashcardContent" class="ai-content" style="display: none;">
+                        <h3 style="margin-bottom: 20px; color: var(--text-light);">AI Flashcard Üretici</h3>
+                        <div class="ai-form">
+                            <div class="form-group">
+                                <label>Sınav Türü</label>
+                                <select id="fcExamType" required>
+                                    <option value="">Seçiniz</option>
+                                    <option value="tyt">TYT</option>
+                                    <option value="ayt">AYT</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Ders</label>
+                                <select id="fcSubject" required>
+                                    <option value="">Seçiniz</option>
+                                    <option value="turkish">Türkçe</option>
+                                    <option value="math">Matematik</option>
+                                    <option value="geometry">Geometri</option>
+                                    <option value="physics">Fizik</option>
+                                    <option value="chemistry">Kimya</option>
+                                    <option value="biology">Biyoloji</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Konu</label>
+                                <input type="text" id="fcTopic" placeholder="Örn: Türev" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Soru Sayısı</label>
+                                <input type="number" id="fcCount" placeholder="10" value="10" required>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary" onclick="generateFlashcards()">Flashcard Üret</button>
+                        
+                        <div id="flashcardsDisplay" style="margin-top: 30px;"></div>
+                    </div>
+
+                    <!-- TEST LAB TOOL -->
+                    <div id="testlabContent" class="ai-content" style="display: none;">
+                        <h3 style="margin-bottom: 20px; color: var(--text-light);">Test Lab - Özgün Soru Üreticisi</h3>
+                        <div class="ai-form">
+                            <div class="form-group">
+                                <label>Sınav Türü</label>
+                                <select id="tlExamType" required>
+                                    <option value="">Seçiniz</option>
+                                    <option value="tyt">TYT</option>
+                                    <option value="ayt">AYT</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Ders</label>
+                                <select id="tlSubject" required>
+                                    <option value="">Seçiniz</option>
+                                    <option value="turkish">Türkçe</option>
+                                    <option value="math">Matematik</option>
+                                    <option value="geometry">Geometri</option>
+                                    <option value="physics">Fizik</option>
+                                    <option value="chemistry">Kimya</option>
+                                    <option value="biology">Biyoloji</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Konu</label>
+                                <input type="text" id="tlTopic" placeholder="Örn: Türev" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Soru Sayısı</label>
+                                <input type="number" id="tlCount" placeholder="5" value="5" required>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary" onclick="generateTestQuestions()">Test Üret</button>
+                        
+                        <div id="testsDisplay" style="margin-top: 30px;"></div>
+                    </div>
+
+                    <!-- PHOTO SOLVER TOOL -->
+                    <div id="photosolverContent" class="ai-content" style="display: none;">
+                        <h3 style="margin-bottom: 20px; color: var(--text-light);">Fotoğraflı Soru Çöz</h3>
+                        
+                        <div class="upload-area" onclick="document.getElementById('photoInput').click()">
+                            <p>📷 Soru fotoğrafınızı yükleyin</p>
+                            <p style="font-size: 12px;">JPG, PNG formatlarında</p>
+                        </div>
+                        <input type="file" id="photoInput" style="display: none;" onchange="handlePhotoUpload()">
+                        
+                        <div id="photoPreview" style="display: none; margin-bottom: 20px;">
+                            <img id="previewImage" style="max-width: 100%; border-radius: 8px; margin-bottom: 10px;">
+                            <button class="btn btn-primary" onclick="solveProblem()">Çözümü Getir</button>
+                            <button class="btn btn-secondary" style="margin-left: 10px;" onclick="clearPhoto()">Temizle</button>
+                        </div>
+
+                        <div id="photoSolution" style="display: none; margin-top: 20px;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SETTINGS PAGE -->
+            <div id="settingsPage" class="page">
+                <h2 style="margin-bottom: 30px; font-size: 24px;">⚙️ Ayarlar & Profil</h2>
+
+                <div class="settings-card">
+                    <h3>Profil Bilgileri</h3>
+                    <div class="settings-grid">
+                        <div class="form-group">
+                            <label>Ad Soyad</label>
+                            <input type="text" id="settingsName" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Hedef</label>
+                            <select id="settingsGoal" required>
+                                <option value="tyt">TYT</option>
+                                <option value="ayt">AYT</option>
+                                <option value="both">İkisi de</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" style="margin-top: 20px;" onclick="updateProfile()">Kaydet</button>
+                </div>
+
+                <div class="settings-card">
+                    <h3>Pro Paket Durumu</h3>
+                    <div class="pro-status" id="proStatusDiv">
+                        <h3>Free Paket</h3>
+                        <p>Pro paket özelliklerine erişmek için lisans kodu aktivasyonu yapın.</p>
+                    </div>
+                    <div class="form-group" id="proCodeForm">
+                        <label>Pro Lisans Kodu</label>
+                        <input type="text" id="proLicenseCode" placeholder="XXXX-XXXX-XXXX-XXXX">
+                        <button class="btn btn-primary" style="margin-top: 10px;" onclick="activateProLicense()">Aktivasyon Yap</button>
+                    </div>
+                    <div class="success-message" id="proSuccessMessage"></div>
+                </div>
+
+                <div class="settings-card">
+                    <h3>Şifre Değiştir</h3>
+                    <div class="settings-grid">
+                        <div class="form-group">
+                            <label>Mevcut Şifre</label>
+                            <input type="password" id="currentPassword" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Yeni Şifre</label>
+                            <input type="password" id="newPassword" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Yeni Şifre Tekrar</label>
+                            <input type="password" id="newPasswordConfirm" required>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" style="margin-top: 20px;" onclick="changePassword()">Şifre Değiştir</button>
+                </div>
+
+                <div class="settings-card" style="background: rgba(239, 68, 68, 0.1); border-color: rgba(239, 68, 68, 0.3);">
+                    <h3 style="color: #fca5a5;">Tehlikeli Bölge</h3>
+                    <p style="color: var(--text-muted); margin-bottom: 15px;">Hesabınızı silmek bu işlemi geri alan tamamen siler. Lütfen dikkat ediniz.</p>
+                    <button class="btn-delete" onclick="deleteAccount()" style="width: 100%; padding: 12px;">Hesabı Sil</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // ===== CONFIG & API SETUP =====
+        const API_BASE = '/api'; // Vercel Functions will handle this
+
+        // ===== STATE MANAGEMENT =====
+        let currentUser = null;
+        let userData = {
+            profile: {},
+            curriculum: {},
+            exams: [],
+            questions: [],
+            sleep: [],
+            schedule: [],
+            badges: {},
+            pomodoro: 0
+        };
+
+        let timerInterval = null;
+        let timerSeconds = 25 * 60;
+        let isTimerRunning = false;
+        let pomodoroCount = 0;
+
+        let currentAITool = 'coach';
+        let flashcardsData = [];
+        let testsData = [];
+        let selectedPhoto = null;
+
+        // ===== INITIALIZATION =====
+        document.addEventListener('DOMContentLoaded', () => {
+            const token = localStorage.getItem('token');
+            if (token) {
+                loadUserData();
+            }
+        });
+
+        // ===== AUTHENTICATION =====
+        function toggleAuthForm() {
+            document.getElementById('loginForm').style.display = 
+                document.getElementById('loginForm').style.display === 'none' ? 'block' : 'none';
+            document.getElementById('registerForm').style.display = 
+                document.getElementById('registerForm').style.display === 'none' ? 'block' : 'none';
+            document.getElementById('authTitle').textContent = 
+                document.getElementById('loginForm').style.display === 'none' ? 'Kaydol' : 'Giriş Yap';
+            document.getElementById('toggleText').innerHTML = 
+                document.getElementById('loginForm').style.display === 'none' 
+                    ? 'Hesabın var mı? <a onclick="toggleAuthForm()">Giriş Yap</a>'
+                    : 'Hesabın yok mu? <a onclick="toggleAuthForm()">Kaydol</a>';
+        }
+
+        async function handleLogin() {
+            const email = document.getElementById('loginEmail').value.trim();
+            const password = document.getElementById('loginPassword').value.trim();
+
+            if (!email || !password) {
+                showAuthError('E-posta ve şifre gereklidir');
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_BASE}/auth/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    showAuthError(data.error || 'Giriş başarısız');
+                    return;
+                }
+
+                localStorage.setItem('token', data.token);
+                localStorage.setItem('user', JSON.stringify(data.user));
+                loadUserData();
+            } catch (err) {
+                showAuthError('Ağ hatası: ' + err.message);
+            }
+        }
+
+        async function handleRegister() {
+            const name = document.getElementById('registerName').value.trim();
+            const email = document.getElementById('registerEmail').value.trim();
+            const password = document.getElementById('registerPassword').value.trim();
+            const passwordConfirm = document.getElementById('registerPasswordConfirm').value.trim();
+            const goal = document.getElementById('registerGoal').value.trim();
+
+            if (!name || !email || !password || !passwordConfirm || !goal) {
+                showAuthError('Tüm alanlar gereklidir');
+                return;
+            }
+
+            if (password !== passwordConfirm) {
+                showAuthError('Şifreler eşleşmiyor');
+                return;
+            }
+
+            if (password.length < 6) {
+                showAuthError('Şifre en az 6 karakter olmalı');
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_BASE}/auth/register`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, email, password, goal })
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    showAuthError(data.error || 'Kayıt başarısız');
+                    return;
+                }
+
+                localStorage.setItem('token', data.token);
+                localStorage.setItem('user', JSON.stringify(data.user));
+                loadUserData();
+            } catch (err) {
+                showAuthError('Ağ hatası: ' + err.message);
+            }
+        }
+
+        function showAuthError(message) {
+            const errorEl = document.getElementById('authError');
+            errorEl.textContent = message;
+            errorEl.classList.add('show');
+            setTimeout(() => errorEl.classList.remove('show'), 5000);
+        }
+
+        async function handleLogout() {
+            const token = localStorage.getItem('token');
+            try {
+                await fetch(`${API_BASE}/auth/logout`, {
+                    method: 'POST',
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+            } catch (err) {
+                console.error('Logout error:', err);
+            }
+
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+            currentUser = null;
+            document.getElementById('authPage').style.display = 'flex';
+            document.getElementById('appContainer').classList.remove('active');
+            document.getElementById('loginForm').style.display = 'block';
+            document.getElementById('registerForm').style.display = 'none';
+        }
+
+        // ===== USER DATA MANAGEMENT =====
+        async function loadUserData() {
+            const token = localStorage.getItem('token');
+            const userStr = localStorage.getItem('user');
+
+            if (!token) {
+                showAuthPage();
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_BASE}/user/profile`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+
+                if (!response.ok) {
+                    localStorage.removeItem('token');
+                    localStorage.removeItem('user');
+                    showAuthPage();
+                    return;
+                }
+
+                const data = await response.json();
+                currentUser = data.user;
+                userData = data.data || userData;
+
+                showAppPage();
+                updateUI();
+            } catch (err) {
+                console.error('Load error:', err);
+                localStorage.removeItem('token');
+                showAuthPage();
+            }
+        }
+
+        function showAuthPage() {
+            document.getElementById('authPage').style.display = 'flex';
+            document.getElementById('appContainer').classList.remove('active');
+        }
+
+        function showAppPage() {
+            document.getElementById('authPage').style.display = 'none';
+            document.getElementById('appContainer').classList.add('active');
+        }
+
+        function updateUI() {
+            // Update user info in sidebar
+            const avatar = currentUser.name.charAt(0).toUpperCase();
+            document.getElementById('userAvatar').textContent = avatar;
+            document.getElementById('userName').textContent = currentUser.name;
+            document.getElementById('userGoal').textContent = `Hedef: ${currentUser.goal === 'tyt' ? 'TYT' : currentUser.goal === 'ayt' ? 'AYT' : 'İkisi de'}`;
+
+            // Update settings
+            document.getElementById('settingsName').value = currentUser.name;
+            document.getElementById('settingsGoal').value = currentUser.goal;
+
+            // Update Pro status
+            const isPro = currentUser.isPro;
+            const proLockDiv = document.getElementById('aiLockContainer');
+            const aiCoachSection = document.getElementById('aiCoachSection');
+
+            if (isPro) {
+                proLockDiv.innerHTML = '';
+                aiCoachSection.style.display = 'block';
+                document.getElementById('proLedBadge').style.display = 'inline-block';
+                document.getElementById('proAIBadge').style.display = 'inline-block';
+                updateProStatus();
+            } else {
+                proLockDiv.innerHTML = `
+                    <div class="ai-lock">
+                        <h2>🔒 Pro Paket Gerekli</h2>
+                        <p>AI Koç, Flashcard, Test Lab ve Fotoğraflı Soru Çöz özelliklerine erişmek için Pro paket aktivasyonu yapınız.</p>
+                        <button class="btn-upgrade" onclick="changePage('settings')">Pro Paket Aktivasyonu</button>
+                    </div>
+                `;
+                aiCoachSection.style.display = 'none';
+            }
+
+            // Load curriculum
+            initCurriculum();
+
+            // Load dashboard data
+            updateDashboard();
+
+            // Load all data
+            loadExams();
+            loadQuestions();
+            loadSleep();
+            loadSchedule();
+            loadBadges();
+        }
+
+        // ===== PAGE NAVIGATION =====
+        function changePage(pageName) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById(pageName + 'Page').classList.add('active');
+
+            document.querySelectorAll('.menu-link').forEach(l => l.classList.remove('active'));
+            document.querySelector(`[data-page="${pageName}"]`).classList.add('active');
+        }
+
+        // ===== CURRICULUM =====
+        const curriculumData = {
+            tyt: {
+                'Türkçe': ['Sözcük Anlamı', 'Cümle Anlamı', 'Yazın Türleri', 'İmlâ', 'Anlam Bilgisi'],
+                'Matematik': ['Kümeler', 'Bağıntı ve Fonksiyon', 'İkinci Derece Denklemler', 'Eşitsizlikler', 'Trigonometri'],
+                'Sosyal Bilimler': ['İnsan Hakları', 'Demokrasi', 'Atatürk İlkeleri', 'Kullanım Kuralları', 'Sosyal Değişim']
+            },
+            ayt: {
+                'Matematik': ['Türev', 'İntegral', 'Doğru Denklemleri', 'Konik Kesitler', 'Matrisi'],
+                'Fizik': ['Dalga Hareketleri', 'Elektromagnetizm', 'Modern Fiziğe Giriş', 'Optik', 'Akışkanlar'],
+                'Kimya': ['Gazlar', 'Çözeltiler', 'Asit-Baz', 'Redoks', 'Elektrokimya'],
+                'Biyoloji': ['Hücre Bölünmesi', 'Genetik', 'Evrim', 'Ekoloji', 'Biyoçeşitlilik']
+            }
+        };
+
+        function initCurriculum() {
+            switchCurriculum('tyt');
+        }
+
+        function switchCurriculum(type) {
+            const content = document.getElementById('curriculumContent');
+            const curriculum = curriculumData[type];
+            let html = '';
+
+            for (const [subject, topics] of Object.entries(curriculum)) {
+                html += `<div class="subject-group">
+                    <div class="subject-title">${subject}</div>
+                    <div class="topic-list">`;
+                
+                topics.forEach(topic => {
+                    const checked = userData.curriculum[`${type}-${subject}-${topic}`] || false;
+                    html += `<div class="topic-item">
+                        <input type="checkbox" id="topic-${type}-${subject}-${topic}" 
+                            ${checked ? 'checked' : ''} 
+                            onchange="saveCurriculumProgress('${type}', '${subject}', '${topic}')">
+                        <label for="topic-${type}-${subject}-${topic}">${topic}</label>
+                    </div>`;
+                });
+
+                html += '</div></div>';
+            }
+
+            content.innerHTML = html;
+        }
+
+        async function saveCurriculumProgress(type, subject, topic) {
+            const key = `${type}-${subject}-${topic}`;
+            const isChecked = document.getElementById(`topic-${type}-${subject}-${topic}`).checked;
+
+            userData.curriculum[key] = isChecked;
+
+            const token = localStorage.getItem('token');
+            try {
+                await fetch(`${API_BASE}/user/curriculum`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({ key, checked: isChecked })
+                });
+            } catch (err) {
+                console.error('Save error:', err);
+            }
+        }
+
+        // ===== DASHBOARD =====
+        async function updateDashboard() {
+            const token = localStorage.getItem('token');
+
+            try {
+                const response = await fetch(`${API_BASE}/user/dashboard`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+
+                const stats = await response.json();
+
+                document.getElementById('streakValue').textContent = stats.streak || 0;
+                document.getElementById('totalQuestionsValue').textContent = stats.totalQuestions || 0;
+                document.getElementById('lastExamScoreValue').textContent = stats.lastExamScore || '-';
+                document.getElementById('successRateValue').textContent = stats.successRate + '%' || '0%';
+                document.getElementById('mainGoalDisplay').textContent = currentUser.goal === 'tyt' ? 'TYT Sınavında 400+ Net' : currentUser.goal === 'ayt' ? 'AYT Sınavında Başarı' : 'Her İki Sınavda Başarı';
+
+                // AI suggestions and motivation (from backend)
+                document.getElementById('aiSuggestion').textContent = stats.aiSuggestion || 'Bugün math konularına odaklanmanı öner iyorum.';
+                document.getElementById('motivationText').textContent = stats.motivation || 'Başarı, bir anlık ilhamdan değil günlük çalışmadan geliştir. Her gün bir adım daha yaklaş hedefine!';
+            } catch (err) {
+                console.error('Dashboard error:', err);
+            }
+        }
+
+        // ===== SCHEDULE =====
+        async function addScheduleItem() {
+            const day = document.getElementById('scheduleDay').value;
+            const subject = document.getElementById('scheduleSubject').value;
+            const topics = document.getElementById('scheduleTopics').value;
+            const duration = document.getElementById('scheduleDuration').value;
+
+            if (!day || !subject || !topics || !duration) {
+                alert('Tüm alanları doldurunuz');
+                return;
+            }
+
+            const token = localStorage.getItem('token');
+            try {
+                const response = await fetch(`${API_BASE}/schedule/add`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({ day, subject, topics, duration })
+                });
+
+                if (response.ok) {
+                    loadSchedule();
+                    document.getElementById('scheduleDay').value = '';
+                    document.getElementById('scheduleSubject').value = '';
+                    document.getElementById('scheduleTopics').value = '';
+                    document.getElementById('scheduleDuration').value = '';
+                }
+            } catch (err) {
+                console.error('Schedule add error:', err);
+            }
+        }
+
+        function loadSchedule() {
+            const token = localStorage.getItem('token');
+            fetch(`${API_BASE}/schedule/list`, {
+                headers: { 'Authorization': `Bearer ${token}` }
+            })
+            .then(r => r.json())
+            .then(schedule => {
+                userData.schedule = schedule;
+                const tbody = document.getElementById('scheduleTableBody');
+                const table = document.getElementById('scheduleTable');
+
+                if (schedule.length === 0) {
+                    table.style.display = 'none';
+                    return;
+                }
+
+                table.style.display = 'table';
+                tbody.innerHTML = '';
+
+                const dayNames = {
+                    'monday': 'Pazartesi', 'tuesday': 'Salı', 'wednesday': 'Çarşamba',
+                    'thursday': 'Perşembe', 'friday': 'Cuma', 'saturday': 'Cumartesi', 'sunday': 'Pazar'
+                };
+
+                schedule.forEach(item => {
+                    const row = `<tr>
+                        <td>${dayNames[item.day]}</td>
+                        <td>${item.subject}</td>
+                        <td>${item.topics}</td>
+                        <td>${item.duration} dk</td>
+                        <td><button class="btn-delete" onclick="deleteScheduleItem(${item.id})">Sil</button></td>
+                    </tr>`;
+                    tbody.innerHTML += row;
+                });
+            })
+            .catch(err => console.error('Load schedule error:', err));
+        }
+
+        async function deleteScheduleItem(id) {
+            const token = localStorage.getItem('token');
+            try {
+                await fetch(`${API_BASE}/schedule/delete/${id}`, {
+                    method: 'DELETE',
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                loadSchedule();
+            } catch (err) {
+                console.error('Delete error:', err);
+            }
+        }
+
+        // ===== EXAMS =====
+        async function addExam() {
+            const type = document.getElementById('examType').value;
+            const name = document.getElementById('examName').value;
+            const score = parseFloat(document.getElementById('examScore').value);
+            const date = document.getElementById('examDate').value;
+
+            if (!type || !name || !score || !date) {
+                alert('Tüm alanları doldurunuz');
+                return;
+            }
+
+            const token = localStorage.getItem('token');
+            try {
+                const response = await fetch(`${API_BASE}/exams/add`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({ type, name, score, date })
+                });
+
+                if (response.ok) {
+                    loadExams();
+                    document.getElementById('examType').value = '';
+                    document.getElementById('examName').value = '';
+                    document.getElementById('examScore').value = '';
+                    document.getElementById('examDate').value = '';
+                }
+            } catch (err) {
+                console.error('Add exam error:', err);
+            }
+        }
+
+        function loadExams() {
+            const token = localStorage.getItem('token');
+            fetch(`${API_BASE}/exams/list`, {
+                headers: { 'Authorization': `Bearer ${token}` }
+            })
+            .then(r => r.json())
+            .then(exams => {
+                userData.exams = exams;
+                const tbody = document.getElementById('examTableBody');
+                tbody.innerHTML = '';
+
+                const typeNames = { 'tyt': 'TYT', 'ayt': 'AYT' };
+
+                exams.forEach(exam => {
+                    const row = `<tr>
+                        <td>${typeNames[exam.type]}</td>
+                        <td>${exam.name}</td>
+                        <td><strong>${exam.score}</strong></td>
+                        <td>${new Date(exam.date).toLocaleDateString('tr-TR')}</td>
+                        <td><button class="btn-delete" onclick="deleteExam(${exam.id})">Sil</button></td>
+                    </tr>`;
+                    tbody.innerHTML += row;
+                });
+
+                // Update chart if loaded
+                if (document.getElementById('examChart')) {
+                    updateExamChart(exams);
+                }
+            })
+            .catch(err => console.error('Load exams error:', err));
+        }
+
+        async function deleteExam(id) {
+            const token = localStorage.getItem('token');
+            try {
+                await fetch(`${API_BASE}/exams/delete/${id}`, {
+                    method: 'DELETE',
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                loadExams();
+            } catch (err) {
+                console.error('Delete error:', err);
+            }
+        }
+
+        function updateExamChart(exams) {
+            if (exams.length === 0) return;
+
+            const canvas = document.getElementById('examChart');
+            if (!canvas || !window.Chart) return;
+
+            exams.sort((a, b) => new Date(a.date) - new Date(b.date));
+
+            const labels = exams.map(e => new Date(e.date).toLocaleDateString('tr-TR'));
+            const scores = exams.map(e => e.score);
+
+            new Chart(canvas, {
+                type: 'line',
+                data: {
+                    labels,
+                    datasets: [{
+                        label: 'Net',
+                        data: scores,
+                        borderColor: '#00d4ff',
+                        backgroundColor: 'rgba(0, 212, 255, 0.1)',
+                        borderWidth: 3,
+                        fill: true,
+                        tension: 0.4,
+                        pointBackgroundColor: '#ff6b9d',
+                        pointBorderColor: '#ff6b9d',
+                        pointRadius: 6,
+                        pointHoverRadius: 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            ticks: { color: '#9ca3af' },
+                            grid: { color: 'rgba(45, 62, 79, 0.3)' }
+                        },
+                        x: { ticks: { color: '#9ca3af' }, grid: { display: false } }
+                    }
+                }
+            });
+        }
+
+        // ===== QUESTIONS =====
+        async function addQuestionStat() {
+            const subject = document.getElementById('questionSubject').value;
+            const topic = document.getElementById('questionTopic').value;
+            const correct = parseInt(document.getElementById('correctCount').value);
+            const wrong = parseInt(document.getElementById('wrongCount').value);
+
+            if (!subject || !topic || !correct || !wrong) {
+                alert('Tüm alanları doldurunuz');
+                return;
+            }
+
+            const token = localStorage.getItem('token');
+            try {
+                const response = await fetch(`${API_BASE}/questions/add`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({ subject, topic, correct, wrong })
+                });
+
+                if (response.ok) {
+                    loadQuestions();
+                    document.getElementById('questionSubject').value = '';
+                    document.getElementById('questionTopic').value = '';
+                    document.getElementById('correctCount').value = '';
+                    document.getElementById('wrongCount').value = '';
+                }
+            } catch (err) {
+                console.error('Add question error:', err);
+            }
+        }
+
+        function loadQuestions() {
+            const token = localStorage.getItem('token');
+            fetch(`${API_BASE}/questions/list`, {
+                headers: { 'Authorization': `Bearer ${token}` }
+            })
+            .then(r => r.json())
+            .then(questions => {
+                userData.questions = questions;
+                const tbody = document.getElementById('questionTableBody');
+                tbody.innerHTML = '';
+
+                const subjectNames = {
+                    'turkish': 'Türkçe', 'math': 'Matematik', 'geometry': 'Geometri',
+                    'physics': 'Fizik', 'chemistry': 'Kimya', 'biology': 'Biyoloji'
+                };
+
+                let totalCorrect = 0, totalWrong = 0;
+
+                questions.forEach(q => {
+                    const total = q.correct + q.wrong;
+                    const percentage = ((q.correct / total) * 100).toFixed(1);
+                    
+                    totalCorrect += q.correct;
+                    totalWrong += q.wrong;
+
+                    const row = `<tr>
+                        <td>${subjectNames[q.subject]}</td>
+                        <td>${q.topic}</td>
+                        <td><span style="color: var(--success);">${q.correct}</span></td>
+                        <td><span style="color: var(--danger);">${q.wrong}</span></td>
+                        <td>${total}</td>
+                        <td>${percentage}%</td>
+                        <td><button class="btn-delete" onclick="deleteQuestion(${q.id})">Sil</button></td>
+                    </tr>`;
+                    tbody.innerHTML += row;
+                });
+
+                // Update stats
+                if (questions.length > 0) {
+                    const generalTotal = totalCorrect + totalWrong;
+                    const generalPercentage = ((totalCorrect / generalTotal) * 100).toFixed(1);
+
+                    document.getElementById('questionStatsSection').style.display = 'block';
+                    document.getElementById('questionStatsContainer').innerHTML = `
+                        <div class="breakdown-card">
+                            <h4>Toplam Doğru</h4>
+                            <div class="number" style="color: var(--success);">${totalCorrect}</div>
+                            <div class="percentage"></div>
+                        </div>
+                        <div class="breakdown-card">
+                            <h4>Toplam Yanlış</h4>
+                            <div class="number" style="color: var(--danger);">${totalWrong}</div>
+                            <div class="percentage"></div>
+                        </div>
+                        <div class="breakdown-card">
+                            <h4>Genel Başarı Oranı</h4>
+                            <div class="number" style="color: var(--accent);">${generalPercentage}%</div>
+                            <div class="percentage">${generalTotal} sorudan</div>
+                        </div>
+                    `;
+                }
+            })
+            .catch(err => console.error('Load questions error:', err));
+        }
+
+        async function deleteQuestion(id) {
+            const token = localStorage.getItem('token');
+            try {
+                await fetch(`${API_BASE}/questions/delete/${id}`, {
+                    method: 'DELETE',
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                loadQuestions();
+            } catch (err) {
+                console.error('Delete error:', err);
+            }
+        }
+
+        // ===== SLEEP =====
+        async function addSleepLog() {
+            const date = document.getElementById('sleepDate').value;
+            const hours = parseFloat(document.getElementById('sleepHours').value);
+
+            if (!date || !hours) {
+                alert('Tüm alanları doldurunuz');
+                return;
+            }
+
+            const token = localStorage.getItem('token');
+            try {
+                const response = await fetch(`${API_BASE}/sleep/add`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({ date, hours })
+                });
+
+                if (response.ok) {
+                    loadSleep();
+                    document.getElementById('sleepDate').value = '';
+                    document.getElementById('sleepHours').value = '';
+                }
+            } catch (err) {
+                console.error('Add sleep error:', err);
+            }
+        }
+
+        function loadSleep() {
+            const token = localStorage.getItem('token');
+            fetch(`${API_BASE}/sleep/list`, {
+                headers: { 'Authorization': `Bearer ${token}` }
+            })
+            .then(r => r.json())
+            .then(sleepLogs => {
+                userData.sleep = sleepLogs;
+                const tbody = document.getElementById('sleepTableBody');
+                tbody.innerHTML = '';
+
+                sleepLogs.forEach(log => {
+                    const row = `<tr>
+                        <td>${new Date(log.date).toLocaleDateString('tr-TR')}</td>
+                        <td>${log.hours} saat</td>
+                        <td><button class="btn-delete" onclick="deleteSleep(${log.id})">Sil</button></td>
+                    </tr>`;
+                    tbody.innerHTML += row;
+                });
+
+                if (document.getElementById('sleepChart')) {
+                    updateSleepChart(sleepLogs);
+                }
+            })
+            .catch(err => console.error('Load sleep error:', err));
+        }
+
+        async function deleteSleep(id) {
+            const token = localStorage.getItem('token');
+            try {
+                await fetch(`${API_BASE}/sleep/delete/${id}`, {
+                    method: 'DELETE',
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                loadSleep();
+            } catch (err) {
+                console.error('Delete error:', err);
+            }
+        }
+
+        function updateSleepChart(sleepLogs) {
+            if (sleepLogs.length === 0) return;
+
+            const canvas = document.getElementById('sleepChart');
+            if (!canvas || !window.Chart) return;
+
+            sleepLogs.sort((a, b) => new Date(a.date) - new Date(b.date));
+
+            const labels = sleepLogs.map(l => new Date(l.date).toLocaleDateString('tr-TR'));
+            const hours = sleepLogs.map(l => l.hours);
+
+            new Chart(canvas, {
+                type: 'bar',
+                data: {
+                    labels,
+                    datasets: [{
+                        label: 'Uyku Saati',
+                        data: hours,
+                        backgroundColor: 'rgba(0, 212, 255, 0.3)',
+                        borderColor: '#00d4ff',
+                        borderWidth: 2,
+                        borderRadius: 8
+                    }]
+                },
+                options: {
+                    indexAxis: 'x',
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 12,
+                            ticks: { color: '#9ca3af' },
+                            grid: { color: 'rgba(45, 62, 79, 0.3)' }
+                        },
+                        x: { ticks: { color: '#9ca3af' }, grid: { display: false } }
+                    }
+                }
+            });
+        }
+
+        // ===== POMODORO =====
+        function startTimer() {
+            if (isTimerRunning) return;
+            isTimerRunning = true;
+
+            timerInterval = setInterval(() => {
+                timerSeconds--;
+
+                if (timerSeconds <= 0) {
+                    clearInterval(timerInterval);
+                    isTimerRunning = false;
+                    pomodoroCount++;
+                    document.getElementById('pomodoroStats').textContent = `Bugün tamamlanan: ${pomodoroCount} Pomodoro`;
+                    alert('🎉 Pomodoro tamamlandı! Molanızı alınız.');
+                    resetTimer();
+                    savePomodoroCount();
+                    return;
+                }
+
+                updateTimerDisplay();
+            }, 1000);
+
+            updateTimerDisplay();
+            document.getElementById('timerStatus').textContent = 'Çalışıyor...';
+        }
+
+        function pauseTimer() {
+            clearInterval(timerInterval);
+            isTimerRunning = false;
+            document.getElementById('timerStatus').textContent = 'Duraklatıldı';
+        }
+
+        function resetTimer() {
+            clearInterval(timerInterval);
+            timerSeconds = 25 * 60;
+            isTimerRunning = false;
+            updateTimerDisplay();
+            document.getElementById('timerStatus').textContent = 'Hazır başlamak için tıkla';
+        }
+
+        function updateTimerDisplay() {
+            const minutes = Math.floor(timerSeconds / 60);
+            const seconds = timerSeconds % 60;
+            document.getElementById('timerDisplay').textContent = 
+                `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        function savePomodoroCount() {
+            const token = localStorage.getItem('token');
+            fetch(`${API_BASE}/pomodoro/log`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({ count: 1 })
+            }).catch(err => console.error('Pomodoro log error:', err));
+        }
+
+        // ===== BADGES =====
+        const badgesInfo = [
+            { id: 'first_step', name: 'İlk Adım', emoji: '👣', condition: 'İlk konuyu tamamla' },
+            { id: 'question_hunter', name: 'Soru Avcısı', emoji: '🎯', condition: '100+ soru çöz' },
+            { id: 'exam_wolf', name: 'Deneme Kurdu', emoji: '🐺', condition: '10+ deneme yap' },
+            { id: 'streak_killer', name: 'Seri Katili', emoji: '⚡', condition: '7 gün seri çalış' },
+            { id: 'night_owl', name: 'Gece Kuşu', emoji: '🦉', condition: '50+ saat uyku takip et' },
+            { id: 'pomodoro_master', name: 'Pomodoro Ustası', emoji: '🍅', condition: '50+ Pomodoro' },
+            { id: 'peak_player', name: 'Zirveye Oynayan', emoji: '🎮', condition: '90%+ başarı oranı' },
+            { id: 'curriculum_monster', name: 'Müfredat Canavarı', emoji: '👹', condition: 'Tüm müfredata ulaş' }
+        ];
+
+        function loadBadges() {
+            const token = localStorage.getItem('token');
+            fetch(`${API_BASE}/badges/list`, {
+                headers: { 'Authorization': `Bearer ${token}` }
+            })
+            .then(r => r.json())
+            .then(badges => {
+                const container = document.getElementById('badgesContainer');
+                container.innerHTML = '';
+
+                badgesInfo.forEach(badge => {
+                    const isUnlocked = badges.some(b => b.badgeId === badge.id);
+                    const badgeEl = `<div class="badge ${isUnlocked ? 'unlocked' : ''}">
+                        <div class="badge-icon">${isUnlocked ? badge.emoji : '🔒'}</div>
+                        <div class="badge-name">${badge.name}</div>
+                        <div class="badge-progress">${badge.condition}</div>
+                    </div>`;
+                    container.innerHTML += badgeEl;
+                });
+            })
+            .catch(err => console.error('Load badges error:', err));
+        }
+
+        function generateLeaderboardData() {
+            const leaderboard = [
+                { rank: 1, name: 'Ahmet Yılmaz', score: 1250, level: 'Üst Usta' },
+                { rank: 2, name: 'Fatma Kaya', score: 1180, level: 'Usta' },
+                { rank: 3, name: currentUser.name, score: 850, level: 'İleri' }
+            ];
+
+            const tbody = document.getElementById('leaderboardBody');
+            tbody.innerHTML = '';
+
+            leaderboard.forEach(user => {
+                const badgeClass = user.rank === 1 ? 'gold' : user.rank === 2 ? 'silver' : user.rank === 3 ? 'bronze' : '';
+                const row = `<tr>
+                    <td><div class="rank-badge ${badgeClass}">${user.rank}</div></td>
+                    <td>${user.name}${user.rank <= 3 ? ' 👑' : ''}</td>
+                    <td><strong>${user.score}</strong></td>
+                    <td>${user.level}</td>
+                </tr>`;
+                tbody.innerHTML += row;
+            });
+        }
+
+        // ===== AI FEATURES =====
+        function switchAITool(tool) {
+            currentAITool = tool;
+
+            document.querySelectorAll('.ai-tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.ai-content').forEach(content => content.style.display = 'none');
+
+            event.target.classList.add('active');
+            document.getElementById(tool + 'Content').style.display = 'block';
+        }
+
+        // COACH
+        async function sendCoachMessage() {
+            const input = document.getElementById('coachInput');
+            const message = input.value.trim();
+
+            if (!message) return;
+
+            // Add user message
+            const chatMessages = document.getElementById('chatMessages');
+            chatMessages.innerHTML += `<div class="chat-message user">
+                <div class="message-content">${message}</div>
+            </div>`;
+
+            input.value = '';
+
+            // Get AI response
+            const token = localStorage.getItem('token');
+            try {
+                const response = await fetch(`${API_BASE}/ai/coach`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({ message, userGoal: currentUser.goal })
+                });
+
+                const data = await response.json();
+
+                // Add AI response
+                chatMessages.innerHTML += `<div class="chat-message assistant">
+                    <div class="message-content">${data.response}</div>
+                </div>`;
+
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            } catch (err) {
+                console.error('Coach error:', err);
+                chatMessages.innerHTML += `<div class="chat-message assistant">
+                    <div class="message-content">Bir hata oluştu. Lütfen tekrar deneyiniz.</div>
+                </div>`;
+            }
+        }
+
+        // FLASHCARD
+        async function generateFlashcards() {
+            const examType = document.getElementById('fcExamType').value;
+            const subject = document.getElementById('fcSubject').value;
+            const topic = document.getElementById('fcTopic').value;
+            const count = parseInt(document.getElementById('fcCount').value);
+
+            if (!examType || !subject || !topic || !count) {
+                alert('Tüm alanları doldurunuz');
+                return;
+            }
+
+            const token = localStorage.getItem('token');
+            const display = document.getElementById('flashcardsDisplay');
+            display.innerHTML = '<div class="loading-spinner"></div><p>Flashcardlar üretiliyor...</p>';
+
+            try {
+                const response = await fetch(`${API_BASE}/ai/flashcard`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({ examType, subject, topic, count })
+                });
+
+                const data = await response.json();
+                flashcardsData = data.cards || [];
+
+                displayFlashcards();
+            } catch (err) {
+                console.error('Flashcard error:', err);
+                display.innerHTML = '<p style="color: var(--danger);">Flashcard üretilmesi başarısız oldu.</p>';
+            }
+        }
+
+        function displayFlashcards() {
+            const display = document.getElementById('flashcardsDisplay');
+            display.innerHTML = '';
+
+            flashcardsData.forEach((card, index) => {
+                const cardEl = `<div class="flashcard-container" key="${index}">
+                    <div class="flashcard" onclick="toggleFlashcard(this)">
+                        <div class="flashcard-label">Soru</div>
+                        <div class="flashcard-text">${card.question}</div>
+                    </div>
+                </div>`;
+                display.innerHTML += cardEl;
+            });
+
+            if (flashcardsData.length > 0) {
+                display.innerHTML += `<div class="flashcard-nav">
+                    <button class="btn btn-secondary" onclick="saveFlashcards()">Kaydet</button>
+                </div>`;
+            }
+        }
+
+        function toggleFlashcard(element) {
+            element.classList.toggle('flipped');
+            const container = element.parentElement;
+            const index = Array.from(container.parentElement.children).indexOf(container);
+
+            if (element.classList.contains('flipped')) {
+                element.innerHTML = `<div class="flashcard-label">Cevap</div>
+                    <div class="flashcard-text">${flashcardsData[index].answer}</div>`;
+            } else {
+                element.innerHTML = `<div class="flashcard-label">Soru</div>
+                    <div class="flashcard-text">${flashcardsData[index].question}</div>`;
+            }
+        }
+
+        async function saveFlashcards() {
+            const token = localStorage.getItem('token');
+            try {
+                await fetch(`${API_BASE}/ai/flashcard/save`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({ cards: flashcardsData })
+                });
+
+                alert('Flashcardlar kaydedildi!');
+            } catch (err) {
+                console.error('Save error:', err);
+            }
+        }
+
+        // TEST LAB
+        async function generateTestQuestions() {
+            const examType = document.getElementById('tlExamType').value;
+            const subject = document.getElementById('tlSubject').value;
+            const topic = document.getElementById('tlTopic').value;
+            const count = parseInt(document.getElementById('tlCount').value);
+
+            if (!examType || !subject || !topic || !count) {
+                alert('Tüm alanları doldurunuz');
+                return;
+            }
+
+            const token = localStorage.getItem('token');
+            const display = document.getElementById('testsDisplay');
+            display.innerHTML = '<div class="loading-spinner"></div><p>Test sorular üretiliyor...</p>';
+
+            try {
+                const response = await fetch(`${API_BASE}/ai/testlab`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({ examType, subject, topic, count })
+                });
+
+                const data = await response.json();
+                testsData = data.questions || [];
+
+                displayTestQuestions();
+            } catch (err) {
+                console.error('Test lab error:', err);
+                display.innerHTML = '<p style="color: var(--danger);">Test üretilmesi başarısız oldu.</p>';
+            }
+        }
+
+        function displayTestQuestions() {
+            const display = document.getElementById('testsDisplay');
+            display.innerHTML = '';
+
+            testsData.forEach((q, index) => {
+                const optionsHtml = q.options.map((opt, i) => `
+                    <div class="test-option">
+                        <input type="radio" name="q${index}" value="${opt.id}">
+                        <label>${opt.text}</label>
+                    </div>
+                `).join('');
+
+                const questionEl = `<div class="test-question">
+                    <h3>${index + 1}. ${q.text}</h3>
+                    <div class="test-options">${optionsHtml}</div>
+                </div>`;
+                display.innerHTML += questionEl;
+            });
+
+            if (testsData.length > 0) {
+                display.innerHTML += `<button class="btn btn-primary" onclick="submitTest()">Cevapları Kontrol Et</button>`;
+            }
+        }
+
+        function submitTest() {
+            let correct = 0, total = 0;
+            const summary = [];
+
+            testsData.forEach((q, index) => {
+                const selected = document.querySelector(`input[name="q${index}"]:checked`);
+                total++;
+
+                if (selected && selected.value === q.correctAnswer) {
+                    correct++;
+                    summary.push(`<p style="color: var(--success);">✓ Soru ${index + 1}: Doğru</p>`);
+                } else {
+                    summary.push(`<p style="color: var(--danger);">✗ Soru ${index + 1}: Yanlış (Doğru: ${q.correctAnswer})</p>`);
+                }
+            });
+
+            const percentage = ((correct / total) * 100).toFixed(1);
+            const summaryDiv = document.getElementById('testsDisplay');
+            summaryDiv.innerHTML = `
+                <div style="background: rgba(0, 212, 255, 0.1); border: 1px solid var(--border); border-radius: 12px; padding: 30px; text-align: center;">
+                    <h2 style="margin-bottom: 20px;">Test Sonuçlarınız</h2>
+                    <div style="font-size: 48px; font-weight: 700; color: var(--accent); margin-bottom: 10px;">${percentage}%</div>
+                    <p style="font-size: 18px; color: var(--text-light);">${correct} / ${total} doğru</p>
+                </div>
+                <div style="margin-top: 30px;">${summary.join('')}</div>
+                <button class="btn btn-secondary" style="margin-top: 20px; width: 100%;" onclick="switchAITool('testlab')">Yeni Test Üret</button>
+            `;
+        }
+
+        // PHOTO SOLVER
+        function handlePhotoUpload() {
+            const input = document.getElementById('photoInput');
+            const file = input.files[0];
+
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                selectedPhoto = e.target.result;
+                const preview = document.getElementById('photoPreview');
+                document.getElementById('previewImage').src = selectedPhoto;
+                preview.style.display = 'block';
+            };
+            reader.readAsDataURL(file);
+        }
+
+        async function solveProblem() {
+            if (!selectedPhoto) {
+                alert('Lütfen fotoğraf seçiniz');
+                return;
+            }
+
+            const token = localStorage.getItem('token');
+            const solutionDiv = document.getElementById('photoSolution');
+            solutionDiv.innerHTML = '<div class="loading-spinner"></div><p>Sorun çözülüyor...</p>';
+            solutionDiv.style.display = 'block';
+
+            try {
+                const response = await fetch(`${API_BASE}/ai/photosolver`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({ photo: selectedPhoto })
+                });
+
+                const data = await response.json();
+
+                solutionDiv.innerHTML = `
+                    <h3 style="margin-bottom: 15px; color: var(--text-light);">📝 Adım Adım Çözüm</h3>
+                    <div class="solution-display">${data.solution.replace(/\n/g, '<br>')}</div>
+                `;
+            } catch (err) {
+                console.error('Solver error:', err);
+                solutionDiv.innerHTML = '<p style="color: var(--danger);">Çözüm alınmadı. Lütfen tekrar deneyiniz.</p>';
+            }
+        }
+
+        function clearPhoto() {
+            selectedPhoto = null;
+            document.getElementById('photoInput').value = '';
+            document.getElementById('photoPreview').style.display = 'none';
+            document.getElementById('photoSolution').style.display = 'none';
+            document.getElementById('photoSolution').innerHTML = '';
+        }
+
+        // ===== SETTINGS & PROFILE =====
+        async function updateProfile() {
+            const name = document.getElementById('settingsName').value;
+            const goal = document.getElementById('settingsGoal').value;
+
+            if (!name || !goal) {
+                alert('Tüm alanları doldurunuz');
+                return;
+            }
+
+            const token = localStorage.getItem('token');
+            try {
+                const response = await fetch(`${API_BASE}/user/profile/update`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({ name, goal })
+                });
+
+                if (response.ok) {
+                    currentUser.name = name;
+                    currentUser.goal = goal;
+                    updateUI();
+                    showSuccessMessage('Profil güncellendi!');
+                }
+            } catch (err) {
+                console.error('Profile update error:', err);
+            }
+        }
+
+        async function activateProLicense() {
+            const code = document.getElementById('proLicenseCode').value.trim();
+
+            if (!code) {
+                alert('Lisans kodu giriniz');
+                return;
+            }
+
+            const token = localStorage.getItem('token');
+            try {
+                const response = await fetch(`${API_BASE}/user/activate-pro`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({ code })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    currentUser.isPro = true;
+                    updateUI();
+                    document.getElementById('proLicenseCode').value = '';
+                    showSuccessMessage(data.message || 'Pro paket aktivasyonu başarılı!');
+                } else {
+                    alert(data.error || 'Aktivasyon başarısız');
+                }
+            } catch (err) {
+                console.error('Activation error:', err);
+            }
+        }
+
+        function updateProStatus() {
+            const statusDiv = document.getElementById('proStatusDiv');
+            const codeForm = document.getElementById('proCodeForm');
+
+            if (currentUser.isPro) {
+                statusDiv.innerHTML = `
+                    <h3 style="color: var(--success);">✅ Pro Paket Aktif</h3>
+                    <p style="color: var(--text-light);">AI araçları, Flashcard ve Test Lab'a erişiminiz var.</p>
+                `;
+                statusDiv.classList.add('active');
+                codeForm.style.display = 'none';
+            }
+        }
+
+        async function changePassword() {
+            const current = document.getElementById('currentPassword').value;
+            const newPass = document.getElementById('newPassword').value;
+            const newPassConfirm = document.getElementById('newPasswordConfirm').value;
+
+            if (!current || !newPass || !newPassConfirm) {
+                alert('Tüm alanları doldurunuz');
+                return;
+            }
+
+            if (newPass !== newPassConfirm) {
+                alert('Yeni şifreler eşleşmiyor');
+                return;
+            }
+
+            if (newPass.length < 6) {
+                alert('Şifre en az 6 karakter olmalı');
+                return;
+            }
+
+            const token = localStorage.getItem('token');
+            try {
+                const response = await fetch(`${API_BASE}/user/change-password`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({ currentPassword: current, newPassword: newPass })
+                });
+
+                if (response.ok) {
+                    showSuccessMessage('Şifre başarıyla değiştirildi!');
+                    document.getElementById('currentPassword').value = '';
+                    document.getElementById('newPassword').value = '';
+                    document.getElementById('newPasswordConfirm').value = '';
+                } else {
+                    const data = await response.json();
+                    alert(data.error || 'Şifre değiştirme başarısız');
+                }
+            } catch (err) {
+                console.error('Password change error:', err);
+            }
+        }
+
+        async function deleteAccount() {
+            if (!confirm('Hesabınızı silmek istediğinize emin misiniz? Bu işlem geri alınamaz.')) {
+                return;
+            }
+
+            if (!confirm('Son uyarı: Hesapınız ve tüm verileriniz silinecektir.')) {
+                return;
+            }
+
+            const token = localStorage.getItem('token');
+            try {
+                await fetch(`${API_BASE}/user/delete`, {
+                    method: 'DELETE',
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+
+                handleLogout();
+            } catch (err) {
+                console.error('Delete error:', err);
+                alert('Hesap silme başarısız');
+            }
+        }
+
+        function showSuccessMessage(message) {
+            const msgEl = document.getElementById('proSuccessMessage');
+            msgEl.textContent = message;
+            msgEl.classList.add('show');
+            setTimeout(() => msgEl.classList.remove('show'), 5000);
+        }
+
+        // ===== LOAD CHART.JS =====
+        const script = document.createElement('script');
+        script.src = 'https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js';
+        document.head.appendChild(script);
+    </script>
+</body>
+</html>

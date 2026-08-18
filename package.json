@@ -1,0 +1,33 @@
+{
+  "name": "exam-prep-coach",
+  "version": "1.0.0",
+  "description": "AI-Powered Exam Preparation Platform",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "vercel dev",
+    "build": "echo 'Build complete'",
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "jsonwebtoken": "^9.1.2",
+    "bcrypt": "^5.1.1",
+    "@vercel/postgres": "^0.5.1",
+    "dotenv": "^16.3.1"
+  },
+  "devDependencies": {
+    "vercel": "^34.0.0"
+  },
+  "engines": {
+    "node": "18.x"
+  },
+  "keywords": [
+    "exam",
+    "preparation",
+    "study",
+    "ai",
+    "coaching"
+  ],
+  "author": "Your Name",
+  "license": "MIT"
+}
