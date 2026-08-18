@@ -1,29 +1,3 @@
 {
-  "buildCommand": "echo 'Build complete'",
-  "devCommand": "vercel dev",
-  "installCommand": "npm install",
-  "framework": null,
-"functions": {
-  "api/**/*.js": {
-    "runtime": "nodejs20.x",
-    "memory": 1024,
-    "maxDuration": 60
-  }
-},
-  "git": {
-    "deploymentEnabled": {
-      "main": true
-    }
-  },
-  "headers": [
-    {
-      "source": "/api/:path*",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "no-cache, no-store, must-revalidate"
-        }
-      ]
-    }
-  ]
+  "framework": null
 }
