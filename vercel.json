@@ -1,7 +1,4 @@
 {
   "framework": null,
-  "outputDirectory": ".",
-  "engines": {
-    "node": "22.x"
-  }
+  "outputDirectory": "."
 }
