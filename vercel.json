@@ -1,32 +1,4 @@
 {
-  "buildCommand": "echo 'Build complete'",
-  "devCommand": "vercel dev",
-  "installCommand": "npm install",
   "framework": null,
-  "git": {
-    "deploymentEnabled": {
-      "main": true
-    }
-  },
-  "headers": [
-    {
-      "source": "/api/:path*",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "no-cache, no-store, must-revalidate"
-        }
-      ]
-    }
-  ],
-  "rewrites": [
-    {
-      "source": "/",
-      "destination": "/public/index.html"
-    },
-    {
-      "source": "/:path*",
-      "destination": "/public/:path*"
-    }
-  ]
+  "outputDirectory": "public"
 }
