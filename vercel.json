@@ -1,4 +1,8 @@
 {
   "framework": null,
-  "outputDirectory": "."
+  "outputDirectory": ".",
+  "rewrites": [
+    { "source": "/api/(.*)", "destination": "/api_$1.js" },
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
 }
