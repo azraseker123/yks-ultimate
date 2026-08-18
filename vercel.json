@@ -10,20 +10,6 @@
       "maxDuration": 60
     }
   },
-  "env": [
-    {
-      "key": "POSTGRES_URL",
-      "description": "PostgreSQL Database URL"
-    },
-    {
-      "key": "JWT_SECRET",
-      "description": "JWT Secret for authentication"
-    },
-    {
-      "key": "GEMINI_API_KEY",
-      "description": "Google Gemini API Key"
-    }
-  ],
   "git": {
     "deploymentEnabled": {
       "main": true
@@ -38,16 +24,6 @@
           "value": "no-cache, no-store, must-revalidate"
         }
       ]
-    }
-  ],
-  "rewrites": [
-    {
-      "source": "/",
-      "destination": "/public/index.html"
-    },
-    {
-      "source": "/:path*",
-      "destination": "/public/:path*"
     }
   ]
 }
