@@ -2014,12 +2014,17 @@ body: JSON.stringify({ action: 'login', email, password })
             }
 
             try {
-                const response = await fetch(`${API_BASE}/auth/register`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ name, email, password, goal })
-                });
-
+                const response = await fetch(`${API_BASE}/auth`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+        action: 'register',
+        name,
+        email,
+        password,
+        goal
+    })
+});
                 const data = await response.json();
 
                 if (!response.ok) {
